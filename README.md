@@ -27,8 +27,13 @@ Using the note taker is intuitive and straightforward. Click the Get Started but
 
 ## Images
 
+This is an image of the home page:
 
+![Image of homepage](./public/assets/images/homepage.PNG)
 
+This is an image of the notes page after addin several notes:
+
+![Image of notes page](./public/assets/images/notes-page.PNG)
 
 ## URLs
 
