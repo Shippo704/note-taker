@@ -2,6 +2,7 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
+const { v4: uuidv4 } = require('uuid');
 
 
 // set port for heroku/testing
@@ -17,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // HTML Routes
 // sends main page index.html
-app.get('/', (req, res) => 
+app.get('/', (req, res) =>
   res.sendFile(path.join(__dirname, '/public/index.html'))
 );
 
@@ -51,7 +52,7 @@ app.post('/api/notes', (req, res) => {
       const dbData = JSON.parse(data);
 
       // add data (note) to database variable
-      dbData.push({"title": note.title, "text": note.text, "id": note.id });
+      dbData.push({"title": note.title, "text": note.text, "id": uuidv4() });
 
       // save the new database
       fs.writeFile('db/db.json', JSON.stringify(dbData), (error) => {
@@ -66,9 +67,9 @@ app.post('/api/notes', (req, res) => {
 //DELETE note
 app.delete('/api/notes/:id', (req, res) => {
   console.log('delete /api/notes/:id')
-  fs.readFile('db/db.json', 'utf8', (error, data) => {
+  let data = fs.readFile('db/db.json', 'utf8', (error) => {
       if (error) {
-          return console.log(error);
+          return console.log('read error:', error);
       }
 
       // save the db data
@@ -82,19 +83,11 @@ app.delete('/api/notes/:id', (req, res) => {
       // save the db data without the deleted note
       fs.writeFile('db/db.json', JSON.stringify(notes), 'utf8', (error) => {
           if (error) {
-              return console.log(error);
+              return console.log('write error:', error);
           }
       });
 
   });
-
-
-  const dataJson = JSON.parse(data);
-  const notes = dataJson.filter((note) => {
-      return note.id !== req.params.id;
-  })
-  fs.writeFileSync('db/db.json', JSON.stringify(notes));
-  res.json("This note has been deleted.");
 })
 
 // run the server
