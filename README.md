@@ -32,6 +32,6 @@ Using the note taker is intuitive and straightforward. Click the Get Started but
 
 ## URLs
 
-GitHub Repository:
+GitHub Repository: https://github.com/Shippo704/note-taker
 
-Deployed Heroku App:
+Deployed Heroku App: https://tranquil-lake-00283-b78beeb3a089.herokuapp.com/
